@@ -6,7 +6,7 @@
 
 # If you want to build arm32 custom rom
 <br>⚬ You MUST use PHH based GSI above android 12</br>
-⚬ You can use GSIs Upto 3GB due limitaion of 
+⚬ You can use GSIs Upto 6.2GB due limitaion of 
 
 # If you want to build arm64 custom rom, 
 
