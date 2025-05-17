@@ -1,4 +1,5 @@
 # Custom Rom Builder For Samsung Galaxy A11/M11
+# This is for 7GB super repartition version!!
 
 <br>⚬ This tool can create full flashble zip with any gsi</br>
 ⚬ This tool support both arm32 and arm64
