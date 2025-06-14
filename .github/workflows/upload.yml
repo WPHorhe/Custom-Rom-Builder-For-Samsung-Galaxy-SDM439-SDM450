@@ -15,7 +15,7 @@ on:
         required: true
         default: '32'                
       VNDK:
-        description: '29 or 30'
+        description: 'vndk29 or vndk30'
         required: true
         default: '29'
       NAME:
