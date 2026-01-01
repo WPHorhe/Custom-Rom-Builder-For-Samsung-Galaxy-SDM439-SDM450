@@ -43,10 +43,10 @@ jobs:
     
         if [[ "$VNDK_INPUT" == "30" ]]; then
           echo "VNDK is 30, will use kernel 4.9.227+ with vndk30 provided by @atul2737 and @Ifoodplayer."
-          DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_7GBSuper/a11q.zip"
+          DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_5GBSuper/a11q.zip"
         else
           echo "VNDK is not 30, will use default settings from @smiley9000 sir (kernel 4.9.186 with vndk29)."
-          DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_7GBSuper/a11q_vndk29.zip"
+          DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_5GBSuper/a11q_vndk29.zip"
         fi
 
         wget "$DOWNLOAD_URL"
