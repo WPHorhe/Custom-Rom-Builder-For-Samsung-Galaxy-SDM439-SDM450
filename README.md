@@ -1,13 +1,12 @@
 # Custom Rom Builder For Samsung Galaxy A11/M11
-# This is for 7GB super repartition version!!
+# This is for 5GB super repartition version!!
 
 <br>⚬ This tool can create full flashble zip with any gsi</br>
 ⚬ This tool support both arm32 and arm64
-⚬ Arm64 still not supported
 
 # If you want to build arm32 custom rom
 <br>⚬ You MUST use PHH based GSI above android 12</br>
-⚬ You can use GSIs Upto 6.2GB due limitaion of 
+⚬ You can use GSIs Upto 4.2GB due limitaion of 
 
 # If you want to build arm64 custom rom, 
 
