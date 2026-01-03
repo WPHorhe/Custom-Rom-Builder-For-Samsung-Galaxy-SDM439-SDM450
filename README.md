@@ -6,7 +6,7 @@
 
 # If you want to build arm32 custom rom
 <br>⚬ You MUST use PHH based GSI above android 12</br>
-⚬ You can use GSIs Upto 4.2GB due limitaion of 
+⚬ You can use GSIs Upto 4.4GB due limitaion of 
 
 # If you want to build arm64 custom rom, 
 
@@ -42,5 +42,5 @@ https://sourceforge.net/projects/andyyan-gsi/files/lineage-19.x/lineage-19.1-202
 like this LineageOS_19.1_SDM439_ARM32_Gapps
 
 
-# ⚬Telegram
+# Telegram
 <br>https://t.me/samsung_galaxy_m01_a01_m11_a11<br>
