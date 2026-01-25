@@ -15,7 +15,7 @@ on:
         required: true
         default: '32'                
       VNDK:
-        description: 'vndk29 or vndk30'
+        description: 'vndk29 or vndk30 or vndk32'
         required: true
         default: '29'
       NAME:
@@ -41,11 +41,14 @@ jobs:
         VNDK_INPUT="${{ github.event.inputs.VNDK }}"
         DOWNLOAD_URL=""
     
-        if [[ "$VNDK_INPUT" == "30" ]]; then
-          echo "VNDK is 30, will use kernel 4.9.227+ with vndk30 provided by @atul2737 and @Ifoodplayer."
-          DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_5GBSuper/a11q.zip"
+        if [[ "$VNDK_INPUT" == "32" ]]; then
+          echo "VNDK is 32, will use kernel 4.9.227 with vndk32 provided by @Ifoodplayer."
+          DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_5GBSuper/a11q_vndk32.zip"
+        elif [[ "$VNDK_INPUT" == "30" ]]; then
+          echo "VNDK is 30, will use kernel 4.9.227 with vndk30 provided by @atul2737 and @Ifoodplayer."
+          DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_5GBSuper/a11q_vndk30.zip"
         else
-          echo "VNDK is not 30, will use default settings from @smiley9000 sir (kernel 4.9.186 with vndk29)."
+          echo "Default VNDK is 29, will use default settings from @smiley9000 sir (kernel 4.9.186 with vndk29)."
           DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_5GBSuper/a11q_vndk29.zip"
         fi
 
