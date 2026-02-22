@@ -7,21 +7,21 @@ on:
   workflow_dispatch:
     inputs:
       GSI:
-        description: 'direct link for Gsi image '
+        description: 'direct link for Gsi image'
         required: true
-        default: 'https://sourceforge.net/projects/andyyan-gsi/files/lineage-19.x/lineage-19.1-20230715-UNOFFICIAL-a64_bgN.img.xz'        
+        default: 'https://github.com/Doze-off/manifest/releases/download/2025-07-12/Infinity-x-2.9_treble_arm64_bgN-ab-Official-EOL.img.xz'        
       ARCH:
         description: 'ARM64 or ARM32?'
         required: true
-        default: '32'                
+        default: '64'
       VNDK:
         description: 'vndk29 or vndk30 or vndk32'
         required: true
-        default: '29'
+        default: '32'
       NAME:
         description: 'Rom Name'
         required: true
-        default: 'LineageOS_19.1_A11_M11_ARM32_Gapps'                
+        default: 'InfinityX_2.9_A11_M11_ARM64_Gapps_5GBSuper'
 
 jobs:
   Build:
@@ -42,7 +42,7 @@ jobs:
         DOWNLOAD_URL=""
     
         if [[ "$VNDK_INPUT" == "32" ]]; then
-          echo "VNDK is 32, will use kernel 4.9.227 with vndk32 provided by @Ifoodplayer."
+          echo "VNDK is 32, will use kernel 4.9.305 with vndk32 provided by @Ifoodplayer."
           DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_5GBSuper/a11q_vndk32.zip"
         elif [[ "$VNDK_INPUT" == "30" ]]; then
           echo "VNDK is 30, will use kernel 4.9.227 with vndk30 provided by @atul2737 and @Ifoodplayer."
@@ -65,9 +65,23 @@ jobs:
     - name: Building
       run: |
         ./arm${{ github.event.inputs.ARCH }}_git
-        
-    - name: Uploading The Zip
-      uses: actions/upload-artifact@v4
+
+    - name: Rename and Upload
+      run: mv ./zip/Custom_Rom_SDM450.zip "./zip/${{ github.event.inputs.NAME }}.zip"
+
+    - name: Get current date
+      run: |
+        echo "RELEASE_DATE=$(TZ='Asia/Taipei' date +'%Y%m%d_%H%M')" >> $GITHUB_ENV
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
       with:
-        name: ${{ github.event.inputs.NAME }}   # Replace with a suitable name
-        path: ./zip/Custom_Rom_SDM450.zip
+        tag_name: ${{ env.RELEASE_DATE }}
+        name: ${{ github.event.inputs.NAME }}
+        body: "This is an auto-generated Custom Rom."
+        draft: true
+        prerelease: false
+        files: |
+          ./zip/${{ github.event.inputs.NAME }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
