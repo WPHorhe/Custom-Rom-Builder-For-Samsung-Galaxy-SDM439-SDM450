@@ -13,15 +13,29 @@ on:
       ARCH:
         description: 'ARM64 or ARM32?'
         required: true
+        type: choice
+        options:
+          - '64'
+          - '32'
         default: '64'
       VNDK:
         description: 'vndk29 or vndk30 or vndk32'
         required: true
+        type: choice
+        options:
+          - '32'
+          - '30'
+          - '29'
         default: '32'
       NAME:
         description: 'Rom Name'
         required: true
         default: 'InfinityX_2.9_A11_M11_ARM64_Gapps_5GBSuper'
+      RELEASE:
+        description: 'Whether to make a release or not'
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   Build:
@@ -66,14 +80,26 @@ jobs:
       run: |
         ./arm${{ github.event.inputs.ARCH }}_git
 
-    - name: Rename and Upload
-      run: mv ./zip/Custom_Rom_SDM450.zip "./zip/${{ github.event.inputs.NAME }}.zip"
+    - name: Prepare Files (Unzip) for Artifact
+      run: |
+        mkdir -p ./extracted
+        unzip ./zip/Custom_Rom_SDM450.zip -d ./extracted
+
+    - name: Upload to Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ github.event.inputs.NAME }}
+        path: ./extracted/
+
+    - name: Prepare Files (Rename) for Release
+      run: cp ./zip/Custom_Rom_SDM450.zip "./zip/${{ github.event.inputs.NAME }}.zip"
 
     - name: Get current date
       run: |
         echo "RELEASE_DATE=$(TZ='Asia/Taipei' date +'%Y%m%d_%H%M')" >> $GITHUB_ENV
 
     - name: Create Release
+      if: ${{ github.event.inputs.RELEASE }}
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ env.RELEASE_DATE }}
