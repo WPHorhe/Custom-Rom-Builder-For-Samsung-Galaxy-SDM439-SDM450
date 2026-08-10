@@ -19,14 +19,15 @@ on:
           - '32'
         default: '64'
       VNDK:
-        description: 'vndk29 or vndk30 or vndk32'
+        description: 'vndk29 or vndk30 or vndk32 or vndk33'
         required: true
         type: choice
         options:
+          - '33'
           - '32'
           - '30'
           - '29'
-        default: '32'
+        default: '33'
       NAME:
         description: 'Rom Name'
         required: true
@@ -43,7 +44,7 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Install Dependencies
       run: |
@@ -55,7 +56,10 @@ jobs:
         VNDK_INPUT="${{ github.event.inputs.VNDK }}"
         DOWNLOAD_URL=""
     
-        if [[ "$VNDK_INPUT" == "32" ]]; then
+        if [[ "$VNDK_INPUT" == "33" ]]; then
+          echo "VNDK is 33, will use kernel 4.9.337 with vndk33 (ifoodplayer v1.4.0 vendor + custom kernel)."
+          DOWNLOAD_URL="https://github.com/WPHorhe/Custom-Rom-Builder-For-Samsung-Galaxy-SDM439-SDM450/releases/download/vndk33-preset/a11q_vndk33.zip"
+        elif [[ "$VNDK_INPUT" == "32" ]]; then
           echo "VNDK is 32, will use kernel 4.9.305 with vndk32 provided by @Ifoodplayer."
           DOWNLOAD_URL="https://sourceforge.net/projects/gsi-for-m11/files/M11_DevOps_5GBSuper/a11q_vndk32.zip"
         elif [[ "$VNDK_INPUT" == "30" ]]; then
@@ -86,7 +90,7 @@ jobs:
         unzip ./zip/Custom_Rom_SDM450.zip -d ./extracted
 
     - name: Upload to Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: ${{ github.event.inputs.NAME }}
         path: ./extracted/
@@ -102,7 +106,7 @@ jobs:
 
     - name: Create Release
       if: github.event.inputs.RELEASE == 'true'
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         tag_name: ${{ env.RELEASE_DATE }}
         name: ${{ github.event.inputs.NAME }}
